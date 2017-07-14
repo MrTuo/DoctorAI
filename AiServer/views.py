@@ -1,5 +1,5 @@
 # coding:utf-8
-from django.shortcuts import render,render_to_response,HttpResponseRedirect
+from django.shortcuts import render,render_to_response,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from AiServer.models import HeartDisease,ChronicKidneyDisease,CheckInf
@@ -46,18 +46,6 @@ def index(req):
                 return render_to_response('select-disease.ejs')
     return render_to_response('index.ejs',{'er_message':er_message})
 
-
-def choose_disease(req):
-    '''
-    TODO 选择疾病,貌似不需要
-    :param req:
-    :return:
-    '''
-    post = req.POST
-    choose_disease_id = post['disease_id']
-
-
-    return
 
 def post_checkinf(req,id):
     '''
@@ -132,15 +120,6 @@ def post_checkinf(req,id):
         return render_to_response("",context) # 传输完跳转到结果展示页。
     return  render_to_response(html_file,context)
 
-def get_result(req):
-    '''
-    TODO 获取结果  貌似不用
-    :param req:
-    :return:
-    '''
-
-    return
-
 def get_all_feedbacks(req):
     '''
     TODO 展示所有feedback
@@ -156,8 +135,19 @@ def get_all_result(req):
     :param req:
     :return:
     '''
-    all_result = CheckInf.objects.get
-    return
+    user = User.objects.get(username="user")
+    all_result = CheckInf.objects.filter(user=user)
+    return render_to_response('follow-page.ejs', {'all_result': all_result})
+    # if req.session.get('username', ''):
+    #     username = req.session['username']
+    #     try:
+    #         user = User.objects.get(username=username)
+    #         all_result = CheckInf.objects.filter(user=user)
+    #     except:
+    #         pass
+    #     return render_to_response('follow-page.ejs',{'all_result':all_result})
+    # else:
+    #     return HttpResponse('Please Login!')
 
 def post_feedback(req,id):
     '''

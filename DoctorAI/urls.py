@@ -21,10 +21,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^$',index),
-    url(r'^choose-disease/$', choose_disease),
+    # url(r'^choose-disease/$', choose_disease),
     url(r'^check-inf-post/(\d+)/$', post_checkinf),
-    url(r'^result$', get_result),
-    url(r'^all-result$', get_all_result),
+    # url(r'^result$', get_result),
+    url(r'^all-result/$', get_all_result),
     url(r'^Feedback/(\d+)/$', post_feedback),
-    url(r'^all-feedbacks$',get_all_feedbacks),
+    url(r'^all-feedbacks/$',get_all_feedbacks),
 ]

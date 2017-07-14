@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="wuwujun">
+
+    <title>医疗诊断辅助系统</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/google-fonts.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/index.css' %}">
+
+  </head>
+  <body>
+    <header>
+        {% block header %}
+        {% endblock %}
+    </header>
+    <!-- main content start-->
+    <!-- about-me-section start-->
+    <section>
+     {% block section %}
+     {% endblock %}
+    </section>
+
+    <footer>
+        {% block footer%}
+        {% endblock %}
+    </footer>
+        {% block window %}
+        {% endblock %}
+    <script type="text/javascript" src="{% static 'AiServer/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'AiServer/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'AiServer/js/index.js' %}"></script>
+        {% block js %}
+        {% endblock %}
+  </body>
+</html>
