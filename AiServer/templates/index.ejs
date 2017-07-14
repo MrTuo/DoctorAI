@@ -16,7 +16,29 @@
 
   </head>
   <body>
-    <header><%- include('./index-header.ejs') %></header>
+    <header>
+        <div class="overlay"></div>
+  <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
+    <div class="container-fluid container my-nav">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">医疗诊断辅助系统</span>
+      </div>
+      <div id="menu" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right my-navbar-menu">
+          <li>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    </header>
     <!-- main content start-->
     <!-- about-me-section start-->
     <section>
@@ -39,7 +61,33 @@
       </div>
     </section>
     
-    <footer><%- include('./footer.ejs') %></footer>
+    <footer>
+        <div class="fixed-footer">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="fixed-footer-left">
+        <ul>
+          <li>
+            <span style="font-size: 13px;">
+              <i class="fa fa-copyright"></i>
+              这个名字最帅对不对  2017
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="fixed-footer-right">
+        <ul>
+          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fa fa-github"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
 
     <div class="modal fade" id="myModal-1" tabindex="-1" 
        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

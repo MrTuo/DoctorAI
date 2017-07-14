@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
-      <%- include('./header.ejs') %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -16,7 +15,36 @@
 
   </head>
   <body>
-    <header><%- include('./signup-header.ejs') %></header>
+    <header>
+        <div class="overlay"></div>
+  <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
+    <div class="container-fluid container my-nav">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">医疗诊断辅助系统</span>
+      </div>
+      <div id="menu" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right my-navbar-menu">
+          <li>
+            <a href="/homePage?logerId=<%= id %>&myId=<%= id %>">返回</a>
+          </li>
+          <li>
+            <a rel="nofollow" rel="noreferrer" href="/aboutUser">心脏病</a>
+          </li>
+          <li>
+            <a rel="nofollow" rel="noreferrer" href="/aboutUser-1">慢性肾炎</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    </header>
     <!-- main content start-->
     <section id="user-details">
       <div id="user-details-section">
@@ -167,7 +195,33 @@
     </section>
 
 
-    <footer><%- include('./footer.ejs') %></footer>
+    <footer>
+        <div class="fixed-footer">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="fixed-footer-left">
+        <ul>
+          <li>
+            <span style="font-size: 13px;">
+              <i class="fa fa-copyright"></i>
+              这个名字最帅对不对  2017
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="fixed-footer-right">
+        <ul>
+          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fa fa-github"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
 
     <div class="modal fade" id="myModal-2" tabindex="-1" 
        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
