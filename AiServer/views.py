@@ -122,14 +122,21 @@ def post_checkinf(req,id):
         return HttpResponseRedirect('/all-result/') # 传输完跳转到结果展示页。
     return  render_to_response(html_file,{'user': user})
 
-def get_all_feedbacks(req):
+def detail(req,id):
     '''
     TODO 展示所有feedback
     :param req:
     :return:
     '''
-
-    return
+    if req.session.get('username', ''):
+        username = req.session['username']
+        try:
+            user = User.objects.get(username=username)
+        except:
+            pass
+        check = CheckInf.objects.get(id=id)
+        return render_to_response('datail.ejs',{'check':check})
+    return HttpResponse('Please Login!')
 
 def get_all_result(req):
     '''
@@ -161,12 +168,12 @@ def post_feedback(req,id):
             all_result = CheckInf.objects.filter(user=user)
         except:
             pass
-        check = CheckInf.objects.filter(id=id)
+        check = CheckInf.objects.get(id=id)
         if req.POST:
             check.back_result = req.POST['back_result']
             check.back_content = req.POST['back_content']
             check.save()
-            return HttpResponseRedirect('all-result')
+            return HttpResponseRedirect('/all-result/')
         return render_to_response('feed-back.ejs', {'user': user})
     else:
         return HttpResponse('Please Login!')

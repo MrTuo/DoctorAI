@@ -26,5 +26,5 @@ urlpatterns = [
     # url(r'^result$', get_result),
     url(r'^all-result/$', get_all_result),
     url(r'^Feedback/(\d+)/$', post_feedback),
-    url(r'^all-feedbacks/$',get_all_feedbacks),
+    url(r'^detail/(\d+)/$',detail),
 ]
