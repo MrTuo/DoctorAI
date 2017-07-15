@@ -1,3 +1,3 @@
 .idea*
- AiServer/migrations/
+AiServer/migrations/*
 db.sqlite3
