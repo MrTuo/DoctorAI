@@ -1,74 +1,77 @@
+{% extends "base.ejs" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="wuwujun">
+{% block header %}
+    <div class="overlay"></div>
+  <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
+    <div class="container-fluid container my-nav">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand">医疗诊断辅助系统</span>
+      </div>
+      <div id="menu" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right my-navbar-menu">
+          <li>
+            <a href="/homePage?id=<%= id %>">返回</a>
+          </li>
+          <li>
 
-    <title>分析结果</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/google-fonts.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/index.css' %}">
-
-  </head>
-  <body>
-  <header><%- include('./follow-header.ejs') %></header>
-
-  <div id="follow-section" class="container">
-    <div class="row">
-      <div class="col-md-offset-3 col-md-6 col-sm-12">
-        <div class="alert alert-success alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <strong>评价成功</strong> ，感谢您的反馈！
-        </div>
-        <div id="my-fans" class="panel panel-info">
-          <div class="panel-heading">
-            <h4 class="panel-title">分析结果</h4>
-          </div>
-          <div class="panel-body">
-            <div class="list-group">
-              <li class="list-group-item">
-              <span class="label label-default pull-right">已评价</span>
-                未患心脏病
-              </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock %}
+{% block section %}
+      <div id="newlog-section">
+      <div class="container">
+        <div class="row">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">历史分析结果</h4>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive table-bordered">
+                <table class="table table-hover">
+                  <tr>
+                    <td>疾病类型</td>
+                    <td>病历详情</td>
+                    <td>查询时间</td>
+                    <td>分析结果</td>
+                    <td>是否反馈</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>心脏病</td>
+                    <td><button class="btn btn-primary btn-xs">查看</button></td>
+                    <td>2017/01/03</td>
+                    <td>未患心脏病</td>
+                    <td>未反馈</td>
+                    <td><button class="btn btn-success btn-xs">点击反馈</button></td>
+                  </tr>
+                  <tr>
+                    <td>心脏病</td>
+                    <td><button class="btn btn-primary btn-xs">查看</button></td>
+                    <td>2017/01/03</td>
+                    <td>未患心脏病</td>
+                    <td>已反馈</td>
+                    <td>确诊</td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <footer>
-      <div class="fixed-footer">
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="fixed-footer-left">
-        <ul>
-          <li>
-            <span style="font-size: 13px;">
-              <i class="fa fa-copyright"></i>
-              这个名字最帅对不对  2017
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="fixed-footer-right">
-        <ul>
-          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-github"></i></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
 
-  </footer>
+  {% endblock %}
+
+{% block window %}
   <div class="modal fade" id="myModal-3" tabindex="-1" 
        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -97,10 +100,4 @@
         </div><!-- .modal-content end-->
       </div>
     </div><!-- .modal end -->
-  
-  <script type="text/javascript" src="javascripts/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="javascripts/index.js"></script>
-
-  </body>
-</html>
+{% endblock %}

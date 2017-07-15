@@ -8,14 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="wuwujun">
 
-    <title>医疗诊断辅助系统</title>
+    <title>{% block title %}医疗诊断辅助系统{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/google-fonts.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/index.css' %}">
 
   </head>
-  <body>
+  <body style="background: #333
+		/*url(http://om107w423.bkt.clouddn.com/patrick-tomasso-71909.jpg)*/
+		url('{% static 'AiServer/img/index.jpg' %}')
+		no-repeat center center fixed;">
     <header>
         {% block header %}
         {% endblock %}
@@ -29,6 +32,31 @@
 
     <footer>
         {% block footer%}
+                    <div class="fixed-footer">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="fixed-footer-left">
+        <ul>
+          <li>
+            <span style="font-size: 13px;">
+              <i class="fa fa-copyright"></i>
+              这个名字最帅对不对  2017
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="fixed-footer-right">
+        <ul>
+          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fa fa-github"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
         {% endblock %}
     </footer>
         {% block window %}

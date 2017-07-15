@@ -1,22 +1,6 @@
+{% extends 'base.ejs'%}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="wuwujun">
-
-    <title>医疗诊断辅助系统</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/google-fonts.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/index.css' %}">
-
-  </head>
-  <body>
-    <header>
+{% block header %}
         <div class="overlay"></div>
   <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
     <div class="container-fluid container my-nav">
@@ -38,10 +22,10 @@
       </div>
     </div>
   </nav>
-    </header>
+ {% endblock %}
     <!-- main content start-->
     <!-- about-me-section start-->
-    <section>
+    {% block section %}
       <div id="about-me-section">
         <div class="overlay"></div>
         <div class="container">
@@ -59,36 +43,9 @@
           </div>
         </div>
       </div>
-    </section>
+    {% endblock %}
     
-    <footer>
-        <div class="fixed-footer">
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="fixed-footer-left">
-        <ul>
-          <li>
-            <span style="font-size: 13px;">
-              <i class="fa fa-copyright"></i>
-              这个名字最帅对不对  2017
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="fixed-footer-right">
-        <ul>
-          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-github"></i></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-    </footer>
-
+    {% block window %}
     <div class="modal fade" id="myModal-1" tabindex="-1" 
        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -115,7 +72,7 @@
                   <div class="form-group">
                     <label for="Password" class="col-sm-2 control-label">Password</label>
                     <div class="col-sm-10">
-                      <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
+                      <input type="password" class="form-control" id="Password" name="password" placeholder="Password"/>
                     </div>
                   </div>
                         <input id="logType" type="hidden" name="type" value="">
@@ -136,13 +93,13 @@
         </div><!-- .modal-content end-->
       </div>
     </div><!-- .modal end -->
-
+{% endblock %}
 
     <script type="text/javascript" src="{% static 'AiServer/js/jquery-2.1.4.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'AiServer/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'AiServer/js/index.js' %}"></script>
+{% block js %}
     <script type="text/javascript">
-      function test() {
         $('#sign-up').click(function() {
           $('#logType').val("0");
           document.getElementById("logForm").submit();
@@ -151,11 +108,6 @@
           $('#logType').val("1");
           document.getElementById("logForm").submit();
         });
-      }
 
     </script>
-
-
-
-  </body>
-</html>
+{% endblock %}

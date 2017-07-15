@@ -1,22 +1,8 @@
+{% extends "base.ejs" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="wuwujun">
-
-    <title>在线诊疗-心脏病</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/google-fonts.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/index.css' %}">
-
-  </head>
-  <body>
-    <header>
-        <div class="overlay"></div>
+{% block title %}在线诊疗-心脏病{% endblock %}
+{% block header %}
+    <div class="overlay"></div>
   <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
     <div class="container-fluid container my-nav">
       <div class="navbar-header">
@@ -43,9 +29,9 @@
       </div>
     </div>
   </nav>
-
-    </header>
+{% endblock %}
     <!-- main content start-->
+{% block section %}
     <section id="user-details">
       <div id="user-details-section">
         <div class="container">
@@ -55,7 +41,7 @@
                 <h4 class="panel-title">各项指标</h4>
               </div>
               <div class="panel-body">
-                <form action="." class="form-horizontal col-xs-9 col-xs-offset-3" role="form" method="post" onsubmit="return false">
+                <form id="postForm" action="." class="form-horizontal col-xs-9 col-xs-offset-3" role="form" method="post" onsubmit="return false">
                   <div class="form-group">
                     <label class="col-sm-2 control-label">年龄</label>
                     <div class="col-sm-4">
@@ -66,10 +52,10 @@
                     <label class="col-sm-2 control-label">性别</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="sex" checked>女
+                        <input type="radio" name="sex" checked value="1">女
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="sex">男
+                        <input type="radio" name="sex" value="0">男
                       </label>
                     </div>
                   </div>
@@ -77,23 +63,23 @@
                     <label class="col-sm-2 control-label">胸部疼痛类型</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="cp" checked>典型心绞痛
+                        <input type="radio" name="cp" checked value="1">典型心绞痛
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="cp">非典型心绞痛
+                        <input type="radio" name="cp" value="2">非典型心绞痛
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="cp">非心绞痛
+                        <input type="radio" name="cp" value="3">非心绞痛
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="cp">无临床症状
+                        <input type="radio" name="cp" value="4">无临床症状
                       </label>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">安静血压</label>
                     <div class="col-sm-4">
-                      <input type="email" class="form-control" placeholder="xx-mmHg", name="tresbps">
+                      <input type="text" class="form-control" placeholder="xx-mmHg", name="tresbps">
                     </div>
                   </div>
                   <div class="form-group">
@@ -112,13 +98,13 @@
                     <label class="col-sm-2 control-label">静息心电图结果</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="restecg" checked>正常
+                        <input type="radio" name="restecg" checkedv value="0">正常
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="restecg">拥有ST-T畸形波
+                        <input type="radio" name="restecg" value="1">拥有ST-T畸形波
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="restecg">显示可能或明确的左心室肥厚
+                        <input type="radio" name="restecg" value="2">显示可能或明确的左心室肥厚
                       </label>
                     </div>
                   </div>
@@ -132,10 +118,10 @@
                     <label class="col-sm-2 control-label">是否为运动诱发的心绞痛</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="exang" checked>是
+                        <input type="radio" name="exang" checked value="0">是
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="exang">否
+                        <input type="radio" name="exang" value="1">否
                       </label>
                     </div>
                   </div>
@@ -149,13 +135,13 @@
                     <label class="col-sm-2 control-label">峰值运动ST段的斜率</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="slope" checked>上涨
+                        <input type="radio" name="slope" checked value="1">上涨
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="slope">瓶
+                        <input type="radio" name="slope" value="2">瓶
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="slope">下坡
+                        <input type="radio" name="slope" value="3">下坡
                       </label>
                     </div>
                   </div>
@@ -166,19 +152,20 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">thal</label>
+                    <label class="col-sm-2 control-label">Thal</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="thal" checked>正常
+                        <input type="radio" name="thal" value="3">正常
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="thal">固定缺陷
+                        <input type="radio" name="thal" value="6">固定缺陷
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="thal">可逆缺陷
+                        <input type="radio" name="thal" value="7">可逆缺陷
                       </label>
                     </div>
                   </div>
+                    <input id="logType" type="hidden" name="user_agree" value="">
                     <input type="hidden" name="type" value="1">
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
@@ -193,9 +180,9 @@
         </div>
       </div>
     </section>
+{% endblock %}
 
-
-    <footer>
+ {% block footer %}
         <div class="fixed-footer">
   <div class="row">
     <div class="col-sm-6">
@@ -221,8 +208,9 @@
     </div>
   </div>
 </div>
-    </footer>
+{% endblock %}
 
+{% block window %}
     <div class="modal fade" id="myModal-2" tabindex="-1" 
        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -247,17 +235,24 @@
             </div>        
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
-            <button type="button" class="btn btn-success" data-dismiss="modal">同意</button>
+            <button id="agree" type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
+            <button id="disagree" type="button" class="btn btn-success" data-dismiss="modal">同意</button>
           </div>
         </div><!-- .modal-content end-->
       </div>
     </div><!-- .modal end -->
+{% endblock %}
 
-    
+{% block js %}
+    <script type="text/javascript">
+        $('#agree').click(function() {
+          $('#logType').val("0");
+          document.getElementById("postForm").submit();
+        });
 
-    <script type="text/javascript" src="javascripts/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="javascripts/index.js"></script>
-  </body>
-</html>
+        $('#disagree').click(function() {
+          $('#logType').val("1");
+          document.getElementById("postForm").submit();
+        });
+    </script>
+{% endblock %}

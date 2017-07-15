@@ -3,47 +3,48 @@ from django.shortcuts import render,render_to_response,HttpResponseRedirect,Http
 from django.contrib.auth.models import User
 from django.contrib import auth
 from AiServer.models import HeartDisease,ChronicKidneyDisease,CheckInf
-
+from DoctorAI.settings import BASE_DIR
 # machine learning
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 # Create your views here.
 def index(req):
     er_message = ""
+    if req.session.get('username', ''):
+        return HttpResponseRedirect('/all-result/')
     if req.POST:
         post = req.POST
         type = req.POST['type']
-        new_name = post['name']
-        new_email = post['email']
-        new_password = post['password']
+        name = post['username']
+        password = post['password']
         if type == '0': #register
-            if User.objects.filter(username=new_name):
-                er_message = 'exist'
+            if User.objects.filter(username=name):
+                return HttpResponseRedirect('exist')
             else:
-                new_User = User.objects.create_user(username=new_name, password=new_password)
+                new_User = User.objects.create_user(username=name, password=password)
                 new_User.save()
-                return HttpResponseRedirect('/')
+            # 注册后自动登录
+                user = auth.authenticate(username=name, password=password)
+                if user is not None:
+                    if user.is_active:
+                        auth.login(req, user)
+                        req.session['username'] = name
+                return HttpResponseRedirect('/all-result/')
         else: # logging
-            if req.session.get('username', ''):
-                return HttpResponseRedirect('/')
-            if req.POST:
-                post = req.POST
-                logname = post["name"]
-                logpassword = post["password"]
-                if User.objects.filter(username=logname):
-                    user = auth.authenticate(username=logname, password=logpassword)
-                    if user is not None:
-                        if user.is_active:
-                            auth.login(req, user)
-                            req.session['username'] = logname
-                            return HttpResponseRedirect('/')
-                        else:
-                            er_message = "not active"
+            if User.objects.filter(username=name):
+                user = auth.authenticate(username=name, password=password)
+                if user is not None:
+                    if user.is_active:
+                        auth.login(req, user)
+                        req.session['username'] = name
+                        return HttpResponseRedirect('/all-result/')
                     else:
-                        er_message = "psword error"
+                        return HttpResponse("not active")
                 else:
-                    er_message = "not exist!"
-                return render_to_response('select-disease.ejs')
+                   return HttpResponse("psword error")
+            else:
+                return HttpResponse("not exist!")
+        return HttpResponseRedirect('/all-result/')
     return render_to_response('index.ejs',{'er_message':er_message})
 
 
@@ -66,10 +67,10 @@ def post_checkinf(req,id):
     elif id == '2':
         html_file = 'about-user-1.ejs'
     if req.POST:
-        pass # TODO 保存对象，计算结果并保存
         post = req.POST
         type = post['type']
-        new_check = CheckInf(user=user, use_agree=post['user_agree'])
+        new_check = CheckInf(user=user, use_agree=int(post['user_agree']))
+        new_check.save()
         if type == '1':
             new_check.disease_id=1
             new_disease = HeartDisease(age=post['age'],
@@ -113,11 +114,12 @@ def post_checkinf(req,id):
                                                appet=post['appet'],
                                                pe=post['pe'],
                                                ane=post['ane'],
+                                               check_inf=new_check,
             )
-        new_check.result = predict_result()
-        new_check.save()
+        new_check.result = predict_result(type,new_disease)
         new_disease.save()
-        return render_to_response("",context) # 传输完跳转到结果展示页。
+        new_check.save()
+        return HttpResponseRedirect('/all-result/') # 传输完跳转到结果展示页。
     return  render_to_response(html_file,context)
 
 def get_all_feedbacks(req):
@@ -135,19 +137,16 @@ def get_all_result(req):
     :param req:
     :return:
     '''
-    user = User.objects.get(username="user")
-    all_result = CheckInf.objects.filter(user=user)
-    return render_to_response('follow-page.ejs', {'all_result': all_result})
-    # if req.session.get('username', ''):
-    #     username = req.session['username']
-    #     try:
-    #         user = User.objects.get(username=username)
-    #         all_result = CheckInf.objects.filter(user=user)
-    #     except:
-    #         pass
-    #     return render_to_response('follow-page.ejs',{'all_result':all_result})
-    # else:
-    #     return HttpResponse('Please Login!')
+    if req.session.get('username', ''):
+        username = req.session['username']
+        try:
+            user = User.objects.get(username=username)
+            all_result = CheckInf.objects.filter(user=user)
+        except:
+            pass
+        return render_to_response('follow-page.ejs',{'all_result':all_result})
+    else:
+        return HttpResponse('Please Login!')
 
 def post_feedback(req,id):
     '''
@@ -169,12 +168,11 @@ def predict_result(disease_id,obj):
     :param obj:输入对象
     :return:预测值
     '''
-    if disease_id == 1:
-        obj=HeartDisease()
-        lg = joblib.load('/models/heart-disease/test.pkl')
-        result = lg.predict([int(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
-    elif disease_id == 2:
-        lg = joblib.load('/models/chronic-kidney-disease/test.pkl')
-        result = lg.predict([int(i) for i in []])
+    if disease_id == '1':
+        lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/heart-disease/test.pkl')
+        result = lg.predict([float(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.exang,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
+    elif disease_id == '2':
+        lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/chronic-kidney-disease/test.pkl')
+        result = lg.predict([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
     return result[0]
 
