@@ -1,0 +1,51 @@
+{% extends "base.ejs" %}
+{% load staticfiles %}
+{% block title %}在线诊疗-心脏病{% endblock %}
+{% block header %}
+    {% include "follow-header.ejs" %}
+{% endblock %}
+    <!-- main content start-->
+{% block section %}
+    <section id="user-details">
+      <div id="user-details-section">
+        <div class="container">
+          <div class="row">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h4 class="panel-title">诊断结果反馈</h4>
+              </div>
+              <div class="panel-body">
+                <form action="." class="form-horizontal col-xs-9 col-xs-offset-3" role="form" method="post" onsubmit="return false">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">结果是否准确？</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="back_result" checked value="0" required>是
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="back_result" value="1">否
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                   <label for="id_content" class="col-sm-2 control-label">评论：</label>
+                      <div class="col-sm-10">
+			            <textarea id = "id_content" class="form-control" name="back_content" rows="5" required wrap="hard"></textarea>
+                      </div>
+                   </div>
+                    <p>注：您的反馈有助于我们继续提升模型的精准度，请您务必认真填写</p>
+                    <div class="col-sm-offset-2 col-sm-10">
+                         <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+ {% block footer %}
+        {% include "footer.ejs" %}
+{% endblock %}

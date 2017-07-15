@@ -120,7 +120,7 @@ def post_checkinf(req,id):
         new_disease.save()
         new_check.save()
         return HttpResponseRedirect('/all-result/') # 传输完跳转到结果展示页。
-    return  render_to_response(html_file,context)
+    return  render_to_response(html_file,{'user': user})
 
 def get_all_feedbacks(req):
     '''
@@ -144,7 +144,7 @@ def get_all_result(req):
             all_result = CheckInf.objects.filter(user=user)
         except:
             pass
-        return render_to_response('follow-page.ejs',{'all_result':all_result})
+        return render_to_response('follow-page.ejs',{'all_result':all_result,'user': user})
     else:
         return HttpResponse('Please Login!')
 
@@ -154,12 +154,23 @@ def post_feedback(req,id):
     :param req:
     :return:
     '''
-    check = CheckInf.objects.filter(id = id)
-    if req.POST:
-        check.back_result = req.POST['back_result']
-        check.save()
-        return HttpResponseRedirect('all-result')
-    return
+    if req.session.get('username', ''):
+        username = req.session['username']
+        try:
+            user = User.objects.get(username=username)
+            all_result = CheckInf.objects.filter(user=user)
+        except:
+            pass
+        check = CheckInf.objects.filter(id=id)
+        if req.POST:
+            check.back_result = req.POST['back_result']
+            check.back_content = req.POST['back_content']
+            check.save()
+            return HttpResponseRedirect('all-result')
+        return render_to_response('feed-back.ejs', {'user': user})
+    else:
+        return HttpResponse('Please Login!')
+
 
 def predict_result(disease_id,obj):
     '''
@@ -170,9 +181,9 @@ def predict_result(disease_id,obj):
     '''
     if disease_id == '1':
         lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/heart-disease/test.pkl')
-        result = lg.predict([float(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.exang,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
+        result = lg.predict_proba([float(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.exang,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
     elif disease_id == '2':
         lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/chronic-kidney-disease/test.pkl')
-        result = lg.predict([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
-    return result[0]
+        result = lg.predict_proba([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
+    return 1-result[0]
 

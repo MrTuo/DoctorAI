@@ -1,30 +1,7 @@
 {% extends "base.ejs" %}
 {% load staticfiles %}
 {% block header %}
-    <div class="overlay"></div>
-  <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
-    <div class="container-fluid container my-nav">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand">医疗诊断辅助系统</span>
-      </div>
-      <div id="menu" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right my-navbar-menu">
-          <li>
-            <a href="/homePage?id=<%= id %>">返回</a>
-          </li>
-          <li>
-
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+{% include "follow-header.ejs" %}
 {% endblock %}
 {% block section %}
       <div id="newlog-section">
@@ -36,32 +13,67 @@
             </div>
             <div class="panel-body">
               <div class="table-responsive table-bordered">
+              {% if all_result %}
                 <table class="table table-hover">
                   <tr>
                     <td>疾病类型</td>
                     <td>病历详情</td>
                     <td>查询时间</td>
-                    <td>分析结果</td>
+                    <td>患病概率</td>
                     <td>是否反馈</td>
-                    <td></td>
+                    <td>反馈结果</td>
                   </tr>
+                    {% for rst in all_result %}
                   <tr>
-                    <td>心脏病</td>
+                    <td>{% if rst.disease_id == 1  %}{{ rst.heartdisease.name }}{% elif rst.disease_id == 2 %}{{ rst.chronickidneydisease.name }}{% endif %}</td>
                     <td><button class="btn btn-primary btn-xs">查看</button></td>
-                    <td>2017/01/03</td>
-                    <td>未患心脏病</td>
+                    <td>{{ rst.date }}</td>
+                    <td>{{ rst.result|floatformat:"2" }}
+{#                        {% if rst.disease_id == 1  %}#}
+{#                            {% if rst.result == 0 %}#}
+{#                                未患心脏病#}
+{#                            {% else%}#}
+{#                                可能患有心脏病，请及时到医院诊断#}
+{#                            {% endif %}#}
+{#                        {% elif rst.disease_id == 2 %}#}
+{#                            {% if rst.result == 0 %}#}
+{#                                未患慢性肾炎#}
+{#                            {% else%}#}
+{#                                可能患有慢性肾炎，请及时到医院诊断#}
+{#                            {% endif %}#}
+{#                        {% endif %}#}
+                    </td>
+                  {% if rst.back_result == -1 %}
                     <td>未反馈</td>
-                    <td><button class="btn btn-success btn-xs">点击反馈</button></td>
+                    <td><a href="/Feedback/{{ rst.id }}" type="button" class="btn btn-success btn-xs">点击反馈</a></td>
                   </tr>
-                  <tr>
-                    <td>心脏病</td>
-                    <td><button class="btn btn-primary btn-xs">查看</button></td>
-                    <td>2017/01/03</td>
-                    <td>未患心脏病</td>
-                    <td>已反馈</td>
-                    <td>确诊</td>
-                  </tr>
+                    {% else %}
+                        <td>已反馈</td>
+                        <td>{% if rst.back_result == 0 %}
+                                结果有误
+                            {% else%}
+                                结果准确
+                            {% endif %}
+{#                            {% if rst.disease_id == 1  %}#}
+{#                            {% if rst.back_result == 0 %}#}
+{#                                未患心脏病#}
+{#                            {% else%}#}
+{#                                可能患有心脏病，请及时到医院诊断#}
+{#                            {% endif %}#}
+{#                        {% elif rst.disease_id == 2 %}#}
+{#                            {% if rst.back_result == 0 %}#}
+{#                                未患慢性肾炎#}
+{#                            {% else%}#}
+{#                                可能患有慢性肾炎，请及时到医院诊断#}
+{#                            {% endif %}#}
+{#                        {% endif %}#}
+                        </td>
+                    {% endif %}
+                    {% endfor %}
                 </table>
+              {% else %}
+                  <h3 style="text-align: center">暂无诊断结果，点击右上角选择疾病进行诊断</h3>
+              {% endif %}
               </div>
             </div>
           </div>

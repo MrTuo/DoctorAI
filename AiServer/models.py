@@ -8,10 +8,11 @@ from django.contrib.auth.models import User
 class CheckInf(models.Model):
     user = models.ForeignKey(User)
     disease_id = models.IntegerField(null=True)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)# 时间
     result = models.IntegerField(default=-1)# 不同病结果不同，但是都是数字表示
     use_agree = models.BooleanField(default=0)
     back_result = models.IntegerField(default=-1,  null=True)# 反馈结果，要求同result
+    back_content = models.CharField(max_length=200,null=True)# 评价
 
     def __unicode__(self):
         return self.user.username
@@ -43,7 +44,7 @@ class ChronicKidneyDisease(models.Model):
     name = models.CharField(max_length=50, default="肾炎")
 
     age = models.IntegerField()# 年龄（数值）
-    bp = models.BooleanField()# 血压（数值）：mmHg：浮点值
+    bp = models.FloatField()# 血压（数值）：mmHg：浮点值
     sg = models.FloatField()# 比重（标称）：（1.005, 1.010, 1.015, 1.020, 1.025）选一个（注释：人体密度与水密度值比，选接近值）
     al = models.IntegerField()# 白蛋白（标称）：（0, 1, 2, 3, 4, 5）
     su = models.IntegerField()# 血糖（标称）：（0, 1, 2, 3, 4, 5）
@@ -60,7 +61,7 @@ class ChronicKidneyDisease(models.Model):
     hemo = models.FloatField()# 血红蛋白（数值）：gms
     pcv = models.IntegerField()# 红细胞压积（比值）：
     wc = models.IntegerField()# 白血球数（数值）：cells / cumm
-    rc = models.BooleanField()# 红血细胞数（数值）：millions / cmm
+    rc = models.IntegerField()# 红血细胞数（数值）：millions / cmm
     htn = models.BooleanField()# 高血压（标称）：（是0，否1）
     dm = models.BooleanField()# 糖尿病（标称）：（是0，否1）
     cad = models.BooleanField()# 冠状动脉疾病（标称）：（是0，否1）
