@@ -9,13 +9,16 @@ class CheckInf(models.Model):
     user = models.ForeignKey(User)
     disease_id = models.IntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True)# 时间
-    result = models.IntegerField(default=-1)# 不同病结果不同，但是都是数字表示
+    result = models.FloatField(default=-1)# 数字表示患病概率
     use_agree = models.BooleanField(default=0)
     back_result = models.IntegerField(default=-1,  null=True)# 反馈结果，要求同result
     back_content = models.CharField(max_length=200,null=True)# 评价
 
     def __unicode__(self):
         return self.user.username
+
+    class Meta:
+        ordering = ['-date']
 
 class HeartDisease(models.Model):
     check_inf = models.OneToOneField(CheckInf)
