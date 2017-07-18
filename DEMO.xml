@@ -1,0 +1,7 @@
+<uwsgi>
+    <socket>127.0.0.1:8800</socket>
+    <chdir>/home/ubuntu/DoctorAI/</chdir>
+    <module>DoctorAI.wsgi:application</module>
+    <processes>1</processes>
+    <daemonize>/var/log/uwsgi.log</daemonize>
+</uwsgi>

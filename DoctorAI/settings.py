@@ -25,7 +25,7 @@ SECRET_KEY = 'h8m$vwmq)lp2d9au1d&v-&kd7**%cs7!xb0%)ia!$kok2#5t%v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -120,6 +120,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+MEDIA_URL = '/media/'
 #media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/AiServer/img').replace('\\', '/')
