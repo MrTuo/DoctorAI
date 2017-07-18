@@ -28,11 +28,11 @@ class HeartDisease(models.Model):
     chol = models.FloatField()# 血清类固醇含量 mg/dl
     fbs = models.FloatField()# 空腹时的血糖:
     restecg = models.IntegerField()# 静息心电图结果.0:正常；1：拥有ST-T畸形波；2：显示可能或明确的左心室肥厚
-    thalach = models.IntegerField()# 达到最大心率
+    thalach = models.FloatField()# 达到最大心率
     exang = models.BooleanField()# 是否为运动诱发的心绞痛，0是，1否
     oldpeak = models.FloatField()# 运动相对于休息引起的ST抑郁症：0.0~9.0
     slope = models.IntegerField()# 峰值运动ST段的斜率：1：上涨；2：瓶；3：下坡
-    ca = models.IntegerField()# 主要血管数量（0-3），用荧光镜检查
+    ca = models.FloatField()# 主要血管数量（0-3），用荧光镜检查
     thal = models.IntegerField()# thal：3 =正常; 6 =固定缺陷; 7 =可逆缺陷（先写thal吧，后面在确认一下是什么）
 
     def __unicode__(self):
@@ -59,9 +59,9 @@ class ChronicKidneyDisease(models.Model):
     sod = models.FloatField()# 钠含量（数值）：mEq / L
     pot = models.FloatField()# 钾含量（数值）：mEq / L
     hemo = models.FloatField()# 血红蛋白（数值）：gms
-    pcv = models.IntegerField()# 红细胞压积（比值）：
-    wc = models.IntegerField()# 白血球数（数值）：cells / cumm
-    rc = models.IntegerField()# 红血细胞数（数值）：millions / cmm
+    pcv = models.FloatField()# 红细胞压积（比值）：
+    wc = models.FloatField()# 白血球数（数值）：cells / cumm
+    rc = models.FloatField()# 红血细胞数（数值）：millions / cmm
     htn = models.BooleanField()# 高血压（标称）：（是0，否1）
     dm = models.BooleanField()# 糖尿病（标称）：（是0，否1）
     cad = models.BooleanField()# 冠状动脉疾病（标称）：（是0，否1）
