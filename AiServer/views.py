@@ -8,6 +8,10 @@ from DoctorAI.settings import BASE_DIR
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 # Create your views here.
+ADVICE = {"health":"结果显示您的身体状况良好，建议定期使用我们的系统检查，远离疾病~",
+           "maybe":"结果显示您的健康数据显示有患病倾向，建议您去医院检查，并做好疾病的预防工作。",
+           "danger":"结果显示您有很大概率患病，刻不容缓，请立即到医院就诊！",
+           }
 def index(req):
     er_msg = ""
     if req.session.get('username', ''):
@@ -123,10 +127,21 @@ def post_checkinf(req,id):
                                                ane=post['ane'],
                                                check_inf=new_check,
             )
-        new_check.result = predict_result(type,new_disease)
+        predict = predict_result(type,new_disease)
+        new_check.result = predict
         new_disease.save()
         new_check.save()
-        return HttpResponseRedirect('/all-result/') # 传输完跳转到结果展示页。
+        advice = ''
+        if predict<0.25:
+            advice = ADVICE['health']
+        elif predict<0.5:
+            advice = ADVICE['maybe']
+        else:
+            advice = ADVICE['danger']
+        return render_to_response('result.ejs',{'user':user,
+                                                'type':type,
+                                                'predict':predict,
+                                                'advice':advice}) # 传输完跳转到结果展示页。
     return  render_to_response(html_file,{'user': user})
 
 def detail(req,id):
@@ -199,5 +214,5 @@ def predict_result(disease_id,obj):
     elif disease_id == '2':
         lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/chronic-kidney-disease/test.pkl')
         result = lg.predict_proba([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
-    return 1-result[0]
+    return 1-result[0][0]
 

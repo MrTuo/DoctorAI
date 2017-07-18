@@ -28,7 +28,7 @@
                     <td>{% if rst.disease_id == 1  %}{{ rst.heartdisease.name }}{% elif rst.disease_id == 2 %}{{ rst.chronickidneydisease.name }}{% endif %}</td>
                     <td><a type="button" href="/detail/{{ rst.id }}" class="btn btn-primary btn-xs">查看</a></td>
                     <td>{{ rst.date }}</td>
-                    <td>{{ rst.result|floatformat:"2" }}
+                    <td>{{ rst.result|floatformat:"4" }}
 {#                        {% if rst.disease_id == 1  %}#}
 {#                            {% if rst.result == 0 %}#}
 {#                                未患心脏病#}
