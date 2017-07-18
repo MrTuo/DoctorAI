@@ -1,3 +1,4 @@
 .idea*
 AiServer/migrations/*
 db.sqlite3
+*.pyc
