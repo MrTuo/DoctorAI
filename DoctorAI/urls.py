@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^all-result/$', get_all_result),
     url(r'^Feedback/(\d+)/$', post_feedback),
     url(r'^detail/(\d+)/$',detail),
+    url(r'^logout/$',logout)
 ]

@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
 # Create your views here.
 def index(req):
-    er_message = ""
+    er_msg = ""
     if req.session.get('username', ''):
         return HttpResponseRedirect('/all-result/')
     if req.POST:
@@ -18,8 +18,11 @@ def index(req):
         name = post['username']
         password = post['password']
         if type == '0': #register
+            password2 = post['password2']
             if User.objects.filter(username=name):
-                return HttpResponseRedirect('exist')
+                er_msg = "用户已存在！"
+            elif password != password2:
+                er_msg = "两次输入不一致！"
             else:
                 new_User = User.objects.create_user(username=name, password=password)
                 new_User.save()
@@ -30,6 +33,7 @@ def index(req):
                         auth.login(req, user)
                         req.session['username'] = name
                 return HttpResponseRedirect('/all-result/')
+            return render_to_response('index.ejs',{'er_msg':er_msg})
         else: # logging
             if User.objects.filter(username=name):
                 user = auth.authenticate(username=name, password=password)
@@ -39,14 +43,17 @@ def index(req):
                         req.session['username'] = name
                         return HttpResponseRedirect('/all-result/')
                     else:
-                        return HttpResponse("not active")
+                        er_msg = "用户状态未激活！"
                 else:
-                   return HttpResponse("psword error")
+                   er_msg = "密码错误！"
             else:
-                return HttpResponse("not exist!")
-        return HttpResponseRedirect('/all-result/')
-    return render_to_response('index.ejs',{'er_message':er_message})
+                er_msg = "该用户不存在!"
+            return render_to_response('index.ejs', {'er_msg': er_msg})
+    return render_to_response('index.ejs',{'er_msg':er_msg})
 
+def logout(req):
+    auth.logout(req)
+    return HttpResponseRedirect('/')
 
 def post_checkinf(req,id):
     '''
