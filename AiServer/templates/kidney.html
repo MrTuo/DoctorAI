@@ -1,31 +1,80 @@
-{% extends "base.ejs" %}
 {% load staticfiles %}
-{% block title %}在线诊疗-肾炎{% endblock %}
-{% block header %}
-   {% include "follow-header.ejs" %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="wuwujun">
 
-{% block section %}
+    <title>在线诊疗-慢性肾炎</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Catamaran:800,300,100">
+    <link rel='stylesheet' href='{% static 'AiServer/css/index_mb.css' %}'>
+
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
+        <div class="container-fluid container my-nav">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">医疗诊断系统</span>
+          </div>
+          <div id="menu" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right my-navbar-menu">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button"
+                   aria-haspopup="true" aria-expanded="false">
+                  疾病类型 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="/check-inf-post/1/?from=mobile">心脏病</a>
+                  </li>
+                  <li>
+                    <a href="/check-inf-post/2/?from=mobile">慢性肾炎</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="/all-result/?from=mobile">返回</a>
+              </li>
+              <li>
+                <a href="/logout/?from=mobile">登出</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- main content start-->
     <section id="user-details">
       <div id="user-details-section">
         <div class="container">
           <div class="row">
             <div class="panel panel-info">
               <div class="panel-heading">
-                <h4 class="panel-title">各项指标</h4>
+                <h4 class="panel-title">慢性肾炎——各项指标</h4>
               </div>
               <div class="panel-body">
-                <form action="." id="postForm" class="form-horizontal col-xs-9 col-xs-offset-3" role="form" method="post" onsubmit="return false">
+                <form action="." class="form-horizontal" role="form" method="post">
                   <div class="form-group">
                     <label class="col-sm-2 control-label">年龄</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" name="age">
+                      <input type="number" class="form-control" name="age" min="1" max="120" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">血压</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-mmHg" name="bp">
+                      <input type="number" class="form-control" name="bp" placeholder="xx-mmHg" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -38,7 +87,7 @@
                         <input type="radio" name="sg" value="1.010">1.010
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="sg"c value="1.015">1.015
+                        <input type="radio" name="sg" value="1.015">1.015
                       </label>
                       <label class="radio-inline">
                         <input type="radio" name="sg" value="1.020">1.020
@@ -75,7 +124,7 @@
                     <label class="col-sm-2 control-label">血糖</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="su" checked value="0">0
+                        <input type="radio" name="su" value="0" checked>0
                       </label>
                       <label class="radio-inline">
                         <input type="radio" name="su" value="1">1
@@ -141,62 +190,62 @@
                   <div class="form-group">
                     <label class="col-sm-2 control-label">随机血糖值</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-mgs/dl" name="bgr">
+                      <input type="text" class="form-control" name="bgr" placeholder="xx-mgs/dl" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">血尿素</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-mgs/dl" name="bu">
+                      <input type="text" class="form-control" name="bu" placeholder="xx-mgs/dl" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">血清肌酸酐</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-mgs/dl" name="sc">
+                      <input type="text" class="form-control" name="sc" placeholder="xx-mgs/dl" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">钠含量</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-mEq/l" name="sod">
+                      <input type="text" class="form-control" name="sod" placeholder="xx-mEq/l" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">钾含量</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-mEq/l" name="pot">
+                      <input type="text" class="form-control" name="pot" placeholder="xx-mEq/l" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">血红蛋白</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="gms" name="hemo">
+                      <input type="text" class="form-control" name="hemo" placeholder="gms" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">红细胞压积</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" name="pcv">
+                      <input type="text" class="form-control" name="pcv" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">白血球数</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="xx-cells/cumm" name="wc">
+                      <input type="text" class="form-control" name="wc" placeholder="xx-cells/cumm" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">红血细胞数</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="millions/cmm" name="rc">
+                      <input type="text" class="form-control" name="rc" placeholder="millions/cmm" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label">高血压</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="htn"  value="0" checked>是
+                        <input type="radio" name="htn" value="0" checked>是
                       </label>
                       <label class="radio-inline">
                         <input type="radio" name="htn" value="1">否
@@ -258,69 +307,39 @@
                       </label>
                     </div>
                   </div>
-                    <input id="logType" type="hidden" name="user_agree" value="">
-                    <input type="hidden" name="type" value="2">
-                    <input type="hidden" name="device" value="pc">
                   <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-{#                        <button type="submit" class="btn btn-primary">提交</button>#}
-                      <a href="#" data-toggle="modal" data-target="#myModal-3" class="btn btn-primary" type="button">提交</a>
+                    <label class="col-sm-2 control-label">您是否同意我们使用您的数据？</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="user_agree" value="0" checked>同意
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="user_agree" value="1">不同意
+                      </label>
                     </div>
+                      <input type="hidden" name="type" value="2">
+                      <input type="hidden" name="device" value="mobile">
                   </div>
+                  <div class="form-group">
+                    <p class="col-sm-2 text-success">数据只包括病情信息，不包含您的姓名等隐私。</p>
+                    <p class="col-sm-2 text-success">这些信息将提升我们的专家诊断系统的准确度。</p>
+                    <p class="col-sm-2 text-success">我们承诺不会将数据泄露给第三方。</p>
+                  </div>
+                  <div class="form-group">
+                     <div class="col-sm-offset-2 col-sm-10">
+                      <Button class="btn btn-primary" type="submit">提交</Button>
+                    </div>
+                  </div>              
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-{% endblock %}
-{% block footer %}
+    </section>
 
-    {% include "footer.ejs" %}
-{% endblock %}
-{% block window %}
-        <div class="modal fade" id="myModal-3" tabindex="-1"
-       role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              &times;
-            </button>
-            <h4 class="modal-title" id="myModalLabel">您是否同意我们使用您的数据？
-              <span id="sign-result" class="text-success"></span>
-            </h4>
+    <script type="text/javascript" src="{% static 'AiServer/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'AiServer/js/bootstrap.min.js' %}"></script>
 
-          </div>
-          <div class="modal-body">
-            <div class="contaniner">
-              <div class="row">
-                <div class="col-md-offset-1 col-md-10">
-                    <p>数据只包括病情信息，不包含您的姓名等隐私。
-                  这些信息将提升我们的专家诊断系统的准确度。我们承诺不会将数据泄露给第三方。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button id="disagree" type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
-            <button id="agree" type="button" class="btn btn-success" data-dismiss="modal">同意</button>
-          </div>
-        </div><!-- .modal-content end-->
-      </div>
-    </div><!-- .modal end -->
-{% endblock %}
-
-{% block js %}
-        <script type="text/javascript">
-        $('#agree').click(function() {
-          $('#logType').val("0");
-          document.getElementById("postForm").submit();
-        });
-
-        $('#disagree').click(function() {
-          $('#logType').val("1");
-          document.getElementById("postForm").submit();
-        });
-    </script>
-{% endblock %}
+  </body>
+</html>
