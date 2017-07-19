@@ -1,11 +1,62 @@
-{% extends "base.ejs" %}
 {% load staticfiles %}
-{% block title %}在线诊疗-肾炎{% endblock %}
-{% block header %}
-   {% include "follow-header.ejs" %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="wuwujun">
 
-{% block section %}
+    <title>在线诊疗-心脏病</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Catamaran:800,300,100">
+    <link rel='stylesheet' href='{% static 'AiServer/css/index_mb.css' %}'>
+
+  </head>
+  <body>
+
+    <header>
+      <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
+        <div class="container-fluid container my-nav">
+          <div class="navbar-header">
+            <Button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </Button>
+            <span class="navbar-brand">医疗诊断系统</span>
+          </div>
+          <div id="menu" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right my-navbar-menu">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="" role="button"
+                   aria-haspopup="true" aria-expanded="false">
+                    查询疾病类型 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/check-inf-post/1/?from=mobile">心脏病</a>
+                    </li>
+                    <li>
+                        <a href="/check-inf-post/2/?from=mobile">慢性肾炎</a>
+                    </li>
+                </ul>
+            </li>
+              <li>
+                <a href="/all-result/?from=mobile">返回</a>
+              </li>
+              <li>
+                <a href="/logout/?from=mobile">登出</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+
     {% if check.disease_id == 2 %}
     <section id="user-details">
       <div id="user-details-section">
@@ -13,7 +64,7 @@
           <div class="row">
             <div class="panel panel-info">
               <div class="panel-heading">
-                <h4 class="panel-title">各项指标</h4>
+                <h4 class="panel-title">心脏病——各项指标</h4>
               </div>
               <div class="panel-body">
                 <form action="." id="postForm" class="form-horizontal col-xs-9 col-xs-offset-3" role="form" method="post" onsubmit="return false">
@@ -265,7 +316,7 @@
           </div>
         </div>
       </div>
-</section>
+      </section>
     {% else %}
             <section id="user-details">
       <div id="user-details-section">
@@ -408,54 +459,9 @@
       </div>
     </section>
     {% endif %}
-{% endblock %}
-{% block footer %}
+    <script type="text/javascript" src="{% static 'AiServer/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'AiServer/js/bootstrap.min.js' %}"></script>
 
-    {% include "footer.ejs" %}
-{% endblock %}
-{% block window %}
-        <div class="modal fade" id="myModal-3" tabindex="-1"
-       role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              &times;
-            </button>
-            <h4 class="modal-title" id="myModalLabel">您是否同意我们使用您的数据？
-              <span id="sign-result" class="text-success"></span>
-            </h4>
 
-          </div>
-          <div class="modal-body">
-            <div class="contaniner">
-              <div class="row">
-                <div class="col-md-offset-1 col-md-10">
-                    <p>数据只包括病情信息，不包含您的姓名等隐私。
-                  这些信息将提升我们的专家诊断系统的准确度。我们承诺不会将数据泄露给第三方。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button id="disagree" type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
-            <button id="agree" type="button" class="btn btn-success" data-dismiss="modal">同意</button>
-          </div>
-        </div><!-- .modal-content end-->
-      </div>
-    </div><!-- .modal end -->
-{% endblock %}
-
-{% block js %}
-        <script type="text/javascript">
-        $('#agree').click(function() {
-          $('#logType').val("0");
-          document.getElementById("postForm").submit();
-        });
-
-        $('#disagree').click(function() {
-          $('#logType').val("1");
-          document.getElementById("postForm").submit();
-        });
-    </script>
-{% endblock %}
+  </body>
+</html>

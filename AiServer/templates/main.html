@@ -1,0 +1,110 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="wuwujun">
+
+    <title>医疗诊断系统</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'AiServer/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Catamaran:800,300,100">
+    <link rel='stylesheet' href='{% static 'AiServer/css/index_mb.css' %}'>
+
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-default navbar-fixed-top my-navbar" role="navigation">
+        <div class="container-fluid container my-nav">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">医疗诊断系统</span>
+          </div>
+          <div id="menu" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right my-navbar-menu">
+              <li>
+                <a href="">用户{{ user.username }}您好！</a>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                   aria-haspopup="true" aria-expanded="false">
+                  查询疾病类型 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="/check-inf-post/1/?from=mobile">心脏病</a>
+                  </li>
+                  <li>
+                    <a href="/check-inf-post/2/?from=mobile">慢性肾炎</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="/logout/?from=mobile">登出</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section>
+      <div id="newlog-section">
+        <div class="container">
+          <div class="row">
+            <div class="table-responsive table-bordered">
+              {% if all_result %}
+                <table class="table table-hover">
+                  <tr>
+                    <td>疾病类型</td>
+                    <td>病历详情</td>
+                    <td>查询时间</td>
+                    <td>患病概率</td>
+                    <td>是否反馈</td>
+                    <td>反馈结果</td>
+                  </tr>
+                    {% for rst in all_result %}
+                  <tr>
+                    <td>{% if rst.disease_id == 1  %}{{ rst.heartdisease.name }}{% elif rst.disease_id == 2 %}{{ rst.chronickidneydisease.name }}{% endif %}</td>
+                    <td><a type="button" href="/detail/{{ rst.id }}/?from=mobile" class="btn btn-primary btn-xs">查看</a></td>
+                    <td>{{ rst.date }}</td>
+                    <td>{{ rst.result|floatformat:"4" }}
+                    </td>
+                  {% if rst.back_result == -1 %}
+                    <td>未反馈</td>
+                    <td><a href="/Feedback/{{ rst.id }}/?from=mobile" type="button" class="btn btn-success btn-xs">点击反馈</a></td>
+                  </tr>
+                    {% else %}
+                        <td>已反馈</td>
+                        <td>{% if rst.back_result == 1 %}
+                                结果有误
+                            {% else%}
+                                结果准确
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+              {% else %}
+                  <h3 style="text-align: center">暂无诊断结果，点击右上角选择疾病进行诊断</h3>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+
+    <script type="text/javascript" src="{% static 'AiServer/js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'AiServer/js/bootstrap.min.js' %}"></script>
+
+
+  </body>
+</html>
