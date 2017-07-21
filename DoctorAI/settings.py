@@ -123,3 +123,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 #media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/AiServer/img').replace('\\', '/')
+
+##### HTTPS Settings
+# requests over HTTP are redirected to HTTPS.
+SECURE_SSL_REDIRECT = True
+# To Avoid existing cookies to be leaked,  This instructs the browser to only send these cookies over HTTPS connections
+SESSION_COOKIE_SECURE =True
+
