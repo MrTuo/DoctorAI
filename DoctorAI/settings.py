@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AiServer',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,8 @@ SECURE_SSL_REDIRECT = True
 # To Avoid existing cookies to be leaked,  This instructs the browser to only send these cookies over HTTPS connections
 SESSION_COOKIE_SECURE =True
 
+SECURE_HSTS_SECONDS = 2
+
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# SECURE_HSTS_PRELOAD = True
