@@ -48,7 +48,7 @@
                   <div class="form-group">
                     <span class="input-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
                     <input type="text" id="email" class="form-control" name="username"
-                           tabindex="1" placeholder="用户名" autofocus required/>
+                           tabindex="1" placeholder="用户名，仅含字母/数字" pattern="[0-9a-zA-Z]+" autofocus required/>
                       {% if er_msg %}
                     <small id="helpSign" class="help-block"
                            style="color:#FFE869;">{{ er_msg }}</small>
@@ -59,7 +59,7 @@
                   <div class="form-group">
                     <span class="input-icon"><i class="fa fa-lock" aria-hidden="true"></i></span>
                     <input type="password" id="pass" class="form-control" name="password"
-                           tabindex="3" placeholder="密码6-9位，仅含字母/数字" pattern="[0-9a-zA-Z]+"
+                           tabindex="2" placeholder="密码6-9位，仅含字母/数字" pattern="[0-9a-zA-Z]+"
                            minlength="6" maxlength="9" required/>
                   </div>
                 </li>
@@ -67,7 +67,7 @@
                   <div class="form-group">
                     <span class="input-icon"><i class="fa fa-lock" aria-hidden="true"></i></span>
                     <input type="password" id="ensurepass" class="form-control" name="password2"
-                           tabindex="5" placeholder="确认密码" minlength="6" maxlength="9"
+                           tabindex="3" placeholder="确认密码" minlength="6" maxlength="9"
                            pattern="[0-9a-zA-Z]+" required
                            onchange="checkPass()" />
                       <small id="helpPass" class="help-block"
