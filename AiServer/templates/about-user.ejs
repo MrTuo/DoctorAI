@@ -197,15 +197,36 @@
 {% block js %}
 
     <script type="text/javascript">
+        function getNumberInNormalDistribution(mean, std_dev){    
+           return mean + (uniform2NormalDistribution() * std_dev);
+        }
+
+        function uniform2NormalDistribution(){
+          var sum = 0.0;
+          for(var i = 0; i < 12; i++) {
+            sum = sum + Math.random();
+          }
+          return sum - 6.0;
+        }
+
+        function obfuscation() {
+          var fields = $('[type=number]').serializeArray();
+          $.each(fields, function(i, filed) {
+            var temp = Number(this.value) + getNumberInNormalDistribution(0.5, 0.1);
+            this.value = temp.toString();
+            // console.log(this);
+          });
+        }
+
         $('#agree').click(function() {
           $('#logType').val("0");
-          //obfuscation();
+          obfuscation();
           document.getElementById("postForm").submit();      
         });
 
         $('#disagree').click(function() {
           $('#logType').val("1");
-          //obfuscation();
+          obfuscation();
           document.getElementById("postForm").submit();
         });
 
