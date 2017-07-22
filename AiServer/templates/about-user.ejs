@@ -1,0 +1,214 @@
+{% extends "base.ejs" %}
+{% load staticfiles %}
+{% block title %}在线诊疗-心脏病{% endblock %}
+{% block header %}
+    {% include "follow-header.ejs" %}
+{% endblock %}
+    <!-- main content start-->
+{% block section %}
+    <section id="user-details">
+      <div id="user-details-section">
+        <div class="container">
+          <div class="row">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h4 class="panel-title">各项指标</h4>
+              </div>
+              <div class="panel-body">
+                <form id="postForm" action="." class="form-horizontal col-xs-9 col-xs-offset-3" role="form" method="post" onsubmit="return false">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">年龄</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" min="1" max="120" id="userAge" name="age" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">性别</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="sex" checked value="1">女
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="sex" value="0">男
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">胸部疼痛类型</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="cp" checked value="1">典型心绞痛
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="cp" value="2">非典型心绞痛
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="cp" value="3">非心绞痛
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="cp" value="4">无临床症状
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">安静血压</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" placeholder="xx-mmHg" id="userTresbps" name="tresbps" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">血清类固醇</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" placeholder="xx-mg/dl" id="userChol" name="chol" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">空腹血糖</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" id="userFbs" name="fbs" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">静息心电图结果</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="restecg" checkedv value="0">正常
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="restecg" value="1">拥有ST-T畸形波
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="restecg" value="2">显示可能或明确的左心室肥厚
+                      </label>
+                    </div>
+                  </div>
+                     <div class="form-group">
+                    <label class="col-sm-2 control-label">最大心率</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" id="userThalach" name="thalach" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">是否为运动诱发的心绞痛</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="exang" checked value="0">是
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="exang" value="1">否
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">运动相对于休息引起的ST抑郁症</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" placeholder="0.0-9.0" id="userOldpeak" name="oldpeak" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">峰值运动ST段的斜率</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="slope" checked value="1">上涨
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="slope" value="2">瓶
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="slope" value="3">下坡
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">主要血管数量</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" placeholder="0-3" id="userCa" name="ca" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Thal</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="thal" value="3">正常
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="thal" value="6">固定缺陷
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="thal" value="7">可逆缺陷
+                      </label>
+                    </div>
+                  </div>
+                    <input id="logType" type="hidden" name="user_agree" value="">
+                    <input type="hidden" name="type" value="1">
+                    <input type="hidden" name="device" value="pc">
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+{#                         <button type="submit" class="btn btn-primary">提交</button>#}
+                      <a href="#" data-toggle="modal" data-target="#myModal-2" class="btn btn-primary" type="button">提交</a>
+                    </div>
+                  </div>              
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+ {% block footer %}
+        {% include "footer.ejs" %}
+{% endblock %}
+
+{% block window %}
+    <div class="modal fade" id="myModal-2" tabindex="-1" 
+       role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+              &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">您是否同意我们使用您的数据？
+              <span id="sign-result" class="text-success"></span>
+            </h4>
+            
+          </div>
+          <div class="modal-body">
+            <div class="contaniner">
+              <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <p>数据只包括病情信息，不包含您的姓名等隐私。
+                  我们承诺不会将数据泄露给第三方。</p>
+                </div>
+              </div>
+            </div>        
+          </div>
+          <div class="modal-footer">
+            <button id="agree" type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
+            <button id="disagree" type="button" class="btn btn-success" data-dismiss="modal">同意</button>
+          </div>
+        </div><!-- .modal-content end-->
+      </div>
+    </div><!-- .modal end -->
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+        $('#agree').click(function() {
+          $('#logType').val("0");
+          obfuscation();
+          document.getElementById("postForm").submit();      
+        });
+
+        $('#disagree').click(function() {
+          $('#logType').val("1");
+          obfuscation();
+          document.getElementById("postForm").submit();
+        });
+
+        
+    </script>
+{% endblock %}
