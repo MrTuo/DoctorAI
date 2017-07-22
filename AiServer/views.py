@@ -7,6 +7,7 @@ from DoctorAI.settings import BASE_DIR
 # machine learning
 from sklearn.linear_model import LogisticRegression
 from sklearn.externals import joblib
+import random
 # Create your views here.
 ADVICE = {"health":"结果显示您的身体状况良好，建议定期使用我们的系统检查，远离疾病~",
            "maybe":"结果显示您的健康数据显示有患病倾向，建议您去医院检查，并做好疾病的预防工作。",
@@ -255,11 +256,19 @@ def predict_result(disease_id,obj):
     :return:预测值
     '''
     if disease_id == '1':
-        lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/heart-disease/test.pkl')
-        result = lg.predict_proba([float(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.exang,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
+        try:
+            lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/new_model1.pkl')
+            result = lg.predict_proba([float(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.exang,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
+        except:
+            print "Load model1 error!"
+            result = random.random()
     elif disease_id == '2':
-        lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/chronic-kidney-disease/test.pkl')
-        result = lg.predict_proba([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
+        try:
+            lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/new_model2.pkl')
+            result = lg.predict_proba([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
+        except:
+            print  "load model2 error!"
+            result = random.random()
     return 1-result[0][0]
 
 ### mobile request
