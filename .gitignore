@@ -2,3 +2,4 @@
 AiServer/migrations/*
 db.sqlite3
 *.pyc
+AiServer/models/*
