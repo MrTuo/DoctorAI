@@ -148,6 +148,7 @@ def post_checkinf(req,id):
                                                ane=post['ane'],
                                                check_inf=new_check,
             )
+        print new_disease
         predict = predict_result(type,new_disease)
         new_check.result = predict
         new_disease.save()
