@@ -54,7 +54,7 @@
                 </div>
                 <div class="panel-body">
                   <blockquote>
-                    <p>系统预测结果显示您患{% if type == 1 %}心脏病{% else %}肾炎的{% endif %}概率约为：<big style="color: red;">{{ predict|floatformat:"4" }}</big></p>
+                    <p>系统预测结果显示您患{% if type == "1" %}心脏病{% else %}肾炎{% endif %}的概率约为：<big style="color: red;">{{ predict|floatformat:"4" }}</big></p>
                     <p>{{ advice }}</p>
                   </blockquote>
                 </div>

@@ -259,16 +259,16 @@ def predict_result(disease_id,obj):
         try:
             lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/new_model1.pkl')
             result = lg.predict_proba([float(i) for i in [obj.age,obj.sex,obj.cp,obj.tresbps,obj.chol,obj.fbs,obj.restecg,obj.thalach,obj.exang,obj.oldpeak,obj.slope, obj.ca,obj.thal]])
-        except:
+        except Exception, e:
             print "Load model1 error!"
-            result = random.random()
+            return random.random()
     elif disease_id == '2':
         try:
             lg = joblib.load(BASE_DIR.replace('\\', '/')+'/AiServer/models/new_model2.pkl')
             result = lg.predict_proba([float(i) for i in [obj.age,obj.bp,obj.sg,obj.al,obj.su,obj.rbc,obj.pc,obj.pcc,obj.ba,obj.bgr,obj.bu,obj.sc,obj.sod,obj.pot,obj.hemo,obj.pcv,obj.wc,obj.rc,obj.htn,obj.dm,obj.cad,obj.appet,obj.pe,obj.ane]])
-        except:
+        except Exception, e:
             print  "load model2 error!"
-            result = random.random()
+            return random.random()
     return 1-result[0][0]
 
 ### mobile request
