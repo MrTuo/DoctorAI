@@ -180,14 +180,14 @@
               <div class="row">
                 <div class="col-md-offset-1 col-md-10">
                     <p>数据只包括病情信息，不包含您的姓名等隐私。
-                  我们承诺不会将数据泄露给第三方。</p>
+                  我们承诺不会将数据泄露给第三方。如果您选择不同意，我们会对您的填写数据进行模糊处理，但是可能会造成预测结果失准。</p>
                 </div>
               </div>
             </div>        
           </div>
           <div class="modal-footer">
-            <button id="agree" type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
-            <button id="disagree" type="button" class="btn btn-success" data-dismiss="modal">同意</button>
+            <button id="disagree" type="button" class="btn btn-danger" data-dismiss="modal">不同意</button>
+            <button id="agree" type="button" class="btn btn-success" data-dismiss="modal">同意</button>
           </div>
         </div><!-- .modal-content end-->
       </div>
@@ -197,7 +197,7 @@
 {% block js %}
 
     <script type="text/javascript">
-        function getNumberInNormalDistribution(mean, std_dev){    
+         function getNumberInNormalDistribution(mean, std_dev){
            return mean + (uniform2NormalDistribution() * std_dev);
         }
 
@@ -209,26 +209,29 @@
           return sum - 6.0;
         }
 
-        function obfuscation() {
-          var fields = $('[type=number]').serializeArray();
-          $.each(fields, function(i, filed) {
-            var temp = Number(this.value) + getNumberInNormalDistribution(0.5, 0.1);
-            this.value = temp.toString();
-            // console.log(this);
-          });
+        function obfuscation(form) {
+
+          for (var i = 0; i < form.elements.length; i++) {
+            if (form.elements[i].type == "number") {
+              var temp = Number(form.elements[i].value) + getNumberInNormalDistribution(0.5, 0.1);
+              form.elements[i].value = temp.toString();
+            }
+          }
         }
 
         $('#agree').click(function() {
           $('#logType').val("0");
-          obfuscation();
-          document.getElementById("postForm").submit();      
+          var form = document.getElementById("postForm");
+          form.submit();
         });
 
         $('#disagree').click(function() {
           $('#logType').val("1");
-          obfuscation();
-          document.getElementById("postForm").submit();
+          var form = document.getElementById("postForm");
+          obfuscation(form);
+          form.submit();
         });
+
 
         
     </script>

@@ -8,7 +8,7 @@
                 <h4 class="panel-title">预测结果</h4>
             </div>
             <div class="panel-body">
-                <p>系统预测结果显示您患{% if type == 1 %}心脏病{% else %}肾炎的{% endif %}概率约为：<big style="color: red;">{{ predict }}</big></p>
+                <p>系统预测结果显示您患{% if type == 1 %}心脏病{% else %}肾炎的{% endif %}概率约为：<big style="color: red;">{{ predict|floatformat:"4" }}</big></p>
                 <p>{{ advice }}</p>
                 <br>
                 <br>

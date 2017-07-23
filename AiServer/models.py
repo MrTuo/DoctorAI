@@ -24,7 +24,7 @@ class HeartDisease(models.Model):
     check_inf = models.OneToOneField(CheckInf)
     name = models.CharField(max_length=50, default = "心脏病")
     # 13 features
-    age = models.IntegerField()
+    age = models.FloatField()
     sex = models.BooleanField() #男：0， 女：1
     cp = models.IntegerField() # 胸部疼痛的类型.1：典型心绞痛；2：非典型心绞痛，3：非心绞痛；4：无临床症状
     tresbps = models.FloatField()# 安静血压 （mmHg）
@@ -46,7 +46,7 @@ class ChronicKidneyDisease(models.Model):
     check_inf = models.OneToOneField(CheckInf)
     name = models.CharField(max_length=50, default="肾炎")
 
-    age = models.IntegerField()# 年龄（数值）
+    age = models.FloatField()# 年龄（数值）
     bp = models.FloatField()# 血压（数值）：mmHg：浮点值
     sg = models.FloatField()# 比重（标称）：（1.005, 1.010, 1.015, 1.020, 1.025）选一个（注释：人体密度与水密度值比，选接近值）
     al = models.IntegerField()# 白蛋白（标称）：（0, 1, 2, 3, 4, 5）
